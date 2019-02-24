@@ -1,0 +1,24 @@
+#include<stdio.h>
+  2 #include<string.h>
+  3 #include<fcntl.h>
+  4 #include<sys/stat.h>
+  5 #include<sys/types.h>
+  6 #include<unistd.h>
+  7 int main(int argc,char *argv[])
+  8 {
+  9     int fd1;
+ 10 char str1[80],str2[80];
+ 11 while(1)
+ 12 {
+ 13     fd1=open(argv[2],O_RDONLY);
+ 14     read(fd1,str1,80);
+ 15     printf("User 2 : %s\n",str1);
+ 16     close(fd1);
+ 17     fd1=open(argv[2],O_WRONLY);
+ 18     fgets(str2,80,stdin);
+ 19     write(fd1,str2,strlen(str2)+1);
+ 20     close(fd1);
+ 21 }
+ 22 return 0;
+ 23 }
+~                 

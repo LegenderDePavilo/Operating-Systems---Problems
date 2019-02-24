@@ -1,0 +1,10 @@
+  1 #include<stdio.h>
+  2 #include<unistd.h>
+  3 int main(int argc,char *argv[])
+  4 {
+  5     printf("\nThis is ol.c called from execv()\n");
+  6     printf("\nThe name of the program is %s\n",argv[1]);
+  7     return 0;
+  8 }
+~                                                                                                                              
+~                       

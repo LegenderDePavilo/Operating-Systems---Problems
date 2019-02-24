@@ -1,0 +1,18 @@
+  1 #include<sys/types.h>
+  2 #include<sys/times.h>
+  3 #include<stdio.h>
+  4 #include<stdlib.h>
+  5 main()
+  6 {
+  7     int i;
+  8     struct tms before,after;
+  9     times(&before);
+ 10     for(i=0;i<1000;i++)
+ 11     if(i>1000)
+ 12         break;
+ 13     times(&after);
+ 14     printf("\nUser time is : %ldseconds\n",after.tms_utime-before.tms_utime);
+ 15     printf("\nSystem time : %ld",after.tms_stime-before.tms_stime);
+ 16     exit(0);
+ 17 }
+~                  

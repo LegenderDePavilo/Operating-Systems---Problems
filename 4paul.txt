@@ -1,0 +1,26 @@
+ 1 #include <stdio.h>      /*************  Read Lock Setter  *************/
+  2 #include<stdlib.h>
+  3 #include <sys/types.h>
+  4 #include <sys/stat.h>
+  5 #include <fcntl.h>
+  6 #include <unistd.h>
+  7 main()
+  8 {
+  9       struct flock lock, savelock;
+ 10         int fd;
+ 11 
+ 12           fd = open("book.dat", O_RDONLY);
+ 13             lock.l_type = F_RDLCK;
+ 14               lock.l_start = 0;
+ 15                 lock.l_whence = SEEK_SET;
+ 16                   lock.l_len = 50;
+ 17                     savelock = lock;
+ 18                       fcntl(fd, F_GETLK, &lock);
+ 19                         if (lock.l_type == F_WRLCK)
+ 20                               {
+ 21                                         printf("File is write-locked by process %d.\n", lock.l_pid);
+ 22                                               exit(1);
+ 23                                                 }
+ 24                           fcntl(fd, F_SETLK, &savelock);
+ 25                             pause();
+ 26 }

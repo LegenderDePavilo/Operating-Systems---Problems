@@ -1,0 +1,33 @@
+#include <stdio.h>
+  2 #include <sys/types.h>
+  3 #include <unistd.h>
+  4 #include<sys/times.h>
+  5 #include<time.h>
+  6 main()
+  7 {
+  8    char *s="hi";
+  9     struct tms before,after;
+ 10    // times(&before);
+ 11     if (fork() == 0)
+ 12     {
+ 13         int i,a;
+ 14     times(&before);
+ 15         printf("*****Child*****\n");
+ 16      for(i=1;i<=100000;i++)
+ 17      {
+ 18          a=a+1;
+ 19          write(1,s,sizeof(s));
+ 20      }
+ 21     times(&after);
+ 22     printf("\nUser time : %ld, %ld\n",after.tms_utime,before.tms_utime);
+ 23     printf("\nSystem time : %ld,%ld\n",after.tms_stime,before.tms_stime);
+ 24     }
+ 25         else
+ 26         {
+ 27          wait();
+ 28         printf("*****Parent*****\n");
+ 29     //printf("\nUser time : %ld, %ld\n",after.tms_utime,before.tms_utime);
+ 30     //printf("\nSystem time : %ld, %ld\n",after.tms_stime,before.tms_stime);
+ 31         return 0;
+ 32         }
+ 33 }

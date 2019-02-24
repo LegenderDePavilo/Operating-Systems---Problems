@@ -1,0 +1,15 @@
+  1 #include <sys/ipc.h>
+  2 #include <sys/shm.h>
+  3 #include <stdio.h>
+  4 int main()
+  5 {
+  6     key_t key = ftok("shmfile",65);
+  7     int shmid = shmget(key,1024,0666|IPC_CREAT);
+  8     char *str = (char*) shmat(shmid,(void*)0,0);
+  9    // printf("Write Data : "); 
+ 10    // gets(str);
+ 11     sprintf(str,"%d",getpid());
+ 12     printf("Data written in memory: %s\n",str);
+ 13     shmdt(str);
+ 14     return 0;
+ 15 }

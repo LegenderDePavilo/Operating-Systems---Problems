@@ -1,0 +1,19 @@
+  1 #include<stdio.h>
+  2 int main()
+  3 {
+  4     int n,i,prev=0,next=1,sum=0;
+  5     char *arr[5];
+  6     printf("\nEnter the number of terms :");
+  7     scanf("%d",&n);
+  8     printf("\nFibonaccci series :\n");
+  9     for(i=1;i<n;i++)
+ 10     {
+ 11        sprintf(arr,"%d",sum);
+ 12        printf("\t%s",arr);
+ 13        sum=prev+next;
+ 14        prev=next;
+ 15        next=sum;
+ 16     }
+ 17 return 0;
+ 18 }
+~         

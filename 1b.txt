@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<sys/types.h>
+#include<stdlib.h>
+int main()
+{
+//Using wait system call
+pid_t id;
+printf("\nUse of system call wait\n");
+if(fork()==0)
+exit(0);
+else
+id=wait(NULL);
+printf("\nThe parent process id is %d and child process id is %d\n",getpid(),id);
+return 0;
+}
+
+//Without using wait system call
+#include<stdio.h>
+#include<sys/types.h>
+#include<stdlib.h>
+int main()
+{
+if(fork()==0)
+printf("\nThis is the child process with id %d and parent process id %d\n",getpid(),getppid());
+return 0;
+}
+                                                                 

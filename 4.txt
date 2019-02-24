@@ -1,0 +1,53 @@
+ 1 #include<stdio.h>
+  2 #include<stdlib.h>
+  3 #include<errno.h>
+  4 #include<fcntl.h>
+  5 #include<unistd.h>
+  6 #include<string.h>
+  7 #define MSGSIZE 50
+  8 int main()
+  9 {
+ 10     char inbuf[MSGSIZE];
+ 11     struct flock f1;
+ 12     f1.l_type=F_WRLCK;
+ 13     f1.l_whence=SEEK_SET;
+ 14     f1.l_start=0;
+ 15     f1.l_len=0;
+ 16     f1.l_pid=getpid();
+ 17     int k,fd=open("klaksh.txt",O_RDWR);
+ 18     if(fd==-1)
+ 19     {
+ 20         perror("Unable to open file : ");
+ 21         exit(EXIT_FAILURE);
+ 22     }
+ 23 //   memset(&f1,0,sizeof(f1));
+ 24 printf("\nPress return to try to get lock : ");
+getchar();
+ 26 printf("\nTrying to get lock.....\n");
+ 27 if(fcntl(fd,F_SETLKW,&f1)==-1)
+ 28 {
+ 29 perror("\nFcntl caused some error : ");
+ 30 exit(EXIT_FAILURE);
+ 31 }
+ 32 printf("\nLocked\n");
+ 33 printf("\nPress 1 to display contents : ");
+ 34 scanf("%d",&k);
+ 35 if(k==1)
+ 36 {
+ 37 read(fd,inbuf,sizeof(inbuf));
+ 38 puts(inbuf);
+ 39 }
+ 40 printf("\nPress return tom release lock : ");
+ 41 getchar();
+ 42 f1.l_type=F_UNLCK;
+ 43 if(fcntl(fd,F_SETLK,&f1)==-1)
+ 44 {
+ 45     perror("\nfcntl caused some error : ");
+ 46     exit(EXIT_FAILURE);
+47 }
+ 48 printf("\nUnlocked");
+ 49 close(fd);
+ 50 return 0;
+ 51 }
+
+                                                                          1,1           Top

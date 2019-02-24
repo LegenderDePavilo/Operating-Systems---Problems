@@ -1,0 +1,31 @@
+1 #include <fcntl.h>
+  2 #include <stdio.h>
+  3 #include <string.h>
+  4 #include <unistd.h>
+  5 #include<stdlib.h>
+  6 #include<sys/types.h>
+  7 #define MSGSIZE 50
+  8 int main (int argc,char* argv[])
+  9 {
+ 10     char file[20],inbuf[MSGSIZE];
+ 11     int fd;
+ 12     struct flock lock;
+ 13     strcpy(file,argv[2]);
+ 14     printf("\nOpening %s", file);
+ 15     fd=open(file, O_RDONLY);
+ 16     printf("\nLocking");
+ 17     lock.l_type=F_RDLCK;
+ 18     lock.l_whence=SEEK_SET;
+ 19     lock.l_len=sizeof(argv[2]);
+ 20     lock.l_pid=getpid();
+ 21     fcntl(fd, F_SETLKW, &lock);
+ 22     printf("\nLocked; hit Enter to unlock... ");
+ 23     getchar();
+ 24     printf("\nUnlocking");
+ 25     lock.l_type=F_UNLCK;
+ 26     fcntl(fd,F_SETLKW,&lock);
+ 27     close(fd);
+ 28     return 0;
+ 29 }
+
+                                                                                                             1,1           Top

@@ -1,0 +1,21 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+int main()
+{
+int f,stat;
+pid_t id;
+f=fork();
+if(f==0)
+{
+char *args[]={"./ol",NULL};
+execv(args[0],args);
+exit(1);
+}
+else
+id=wait(&stat);
+if(WIFEXITED(stat))
+printf("\nThe child process is %d with exit status %d\n",id,WEXITSTATUS(stat));
+printf("\nThe parent process id is %d and the child process id is %d",getpid(),id);
+return 0;
+}
